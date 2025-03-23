@@ -39,4 +39,8 @@ public class PatientEntity extends AuditableEntity {
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicalHistoryEntity> medicalHistories;
+
+    public PatientEntity(String firstName, String lastName, LocalDate birthday, String mobileNo, String email, String address, String gender, String emergencyContactName, String emergencyContactPhone, String insuranceInfo) {
+        this.firstName = firstName;
+    }
 }

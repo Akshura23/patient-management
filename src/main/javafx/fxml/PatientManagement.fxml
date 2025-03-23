@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.patient.management.fx.controller.PatientManagementController" spacing="10" alignment="CENTER">
+    <TextField fx:id="firstNameField" promptText="First Name"/>
+    <TextField fx:id="lastNameField" promptText="Last Name"/>
+    <TextField fx:id="birthdayField" promptText="Birthday"/>
+    <TextField fx:id="mobileNoField" promptText="Mobile No"/>
+    <TextField fx:id="emailField" promptText="Email"/>
+    <TextField fx:id="addressField" promptText="Address"/>
+    <TextField fx:id="genderField" promptText="Gender"/>
+    <TextField fx:id="emergencyContactNameField" promptText="Emergency Contact Name"/>
+    <TextField fx:id="emergencyContactPhoneField" promptText="Emergency Contact Phone"/>
+    <TextField fx:id="insuranceInfoField" promptText="Insurance Info"/>
+    <Button text="Add" onAction="#handleAddButtonAction"/>
+    <Button text="Update" onAction="#handleUpdateButtonAction"/>
+    <Button text="Delete" onAction="#handleDeleteButtonAction"/>
+    <Button text="View Medical History" onAction="#handleViewButtonAction"/>
+    <TableView fx:id="patientTable">
+        <columns>
+            <TableColumn text="First Name" fx:id="firstNameColumn"/>
+            <TableColumn text="Last Name" fx:id="lastNameColumn"/>
+            <TableColumn text="Birthday" fx:id="birthdayColumn"/>
+            <TableColumn text="Mobile No" fx:id="mobileNoColumn"/>
+            <TableColumn text="Email" fx:id="emailColumn"/>
+            <TableColumn text="Address" fx:id="addressColumn"/>
+            <TableColumn text="Gender" fx:id="genderColumn"/>
+            <TableColumn text="Emergency Contact Name" fx:id="emergencyContactNameColumn"/>
+            <TableColumn text="Emergency Contact Phone" fx:id="emergencyContactPhoneColumn"/>
+            <TableColumn text="Insurance Info" fx:id="insuranceInfoColumn"/>
+        </columns>
+    </TableView>
+</VBox>

@@ -1,4 +1,4 @@
-package com.patient.management.fx.view;
+package com.patient.management.fx.controller;
 
 import com.patient.management.service.authentication.AuthenticationService;
 import javafx.fxml.FXML;
