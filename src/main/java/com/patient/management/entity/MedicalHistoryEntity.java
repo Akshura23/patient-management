@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "medical_history")
-public class MedicalHistory extends AuditableEntity{
+public class MedicalHistoryEntity extends AuditableEntity{
     @Column(name = "description", nullable = false)
     private String description;
 

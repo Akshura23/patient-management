@@ -1,4 +1,8 @@
 package com.patient.management.repository;
 
-public interface UserRepository {
+import com.patient.management.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity> {
 }
