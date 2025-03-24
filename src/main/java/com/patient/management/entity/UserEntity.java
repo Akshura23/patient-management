@@ -34,8 +34,4 @@ public class UserEntity extends AuditableEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-
-    public UserEntity(String username, String encodedPassword) {
-        super();
-    }
 }

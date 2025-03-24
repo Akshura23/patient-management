@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.patient.management.fx.controller.PatientManagementController"
+            styleClass="main-container"
+            minWidth="800"
+            minHeight="600">
+    <stylesheets>
+        <URL value="@../styles/patient-management.css"/>
+    </stylesheets>
+
+    <top>
+        <HBox alignment="CENTER_LEFT" styleClass="header-container">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+            <Label text="Patient Management" styleClass="title-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Add New Patient" onAction="#handleAddNewPatient" styleClass="add-button"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox styleClass="table-container">
+            <padding>
+                <Insets top="20" right="30" bottom="30" left="30"/>
+            </padding>
+            <TableView fx:id="patientTable" styleClass="patient-table" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="UID" fx:id="uidColumn" visible="false"/>
+                    <TableColumn text="First Name" fx:id="firstNameColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Last Name" fx:id="lastNameColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Birthday" fx:id="birthdayColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Age" fx:id="ageColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Mobile No" fx:id="mobileNoColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Email" fx:id="emailColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Gender" fx:id="genderColumn" styleClass="center-aligned-column"/>
+                    <TableColumn text="Actions" fx:id="actionsColumn" styleClass="center-aligned-column"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

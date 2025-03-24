@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.patient.management.fx.controller.PatientFormController"
+            styleClass="main-container"
+            minWidth="600"
+            minHeight="400">
+    <stylesheets>
+        <URL value="@../styles/patient-management.css"/>
+    </stylesheets>
+
+    <top>
+        <HBox alignment="CENTER_LEFT" styleClass="header-container">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+            <Label text="Update Patient" styleClass="title-label"/>
+            <Button text="Back to List" onAction="#handleCancel" styleClass="back-button"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="15" styleClass="form-container">
+            <GridPane hgap="10" vgap="10" styleClass="grid-pane">
+                <Label text="First Name:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Last Name:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Birthday:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Mobile No:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="mobileNoField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Email:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <Label text="Gender:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <ComboBox fx:id="genderComboBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            </GridPane>
+            <HBox spacing="15" alignment="CENTER" styleClass="button-container">
+                <Button text="Cancel" onAction="#handleCancel" styleClass="cancel-button" prefWidth="120"/>
+                <Button text="Save" onAction="#handleSave" styleClass="save-button" defaultButton="true" prefWidth="120"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

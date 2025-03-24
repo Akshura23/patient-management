@@ -1,0 +1,163 @@
+/* Main container */
+.main-container {
+    -fx-background-color: #f8f9fa;
+    -fx-pref-width: 1024px;
+    -fx-pref-height: 768px;
+}
+
+/* Header styles */
+.header-container {
+    -fx-background-color: white;
+    -fx-padding: 20 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Button styles */
+.add-button, .save-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.add-button:hover, .save-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.back-button, .cancel-button {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+
+.back-button:hover, .cancel-button:hover {
+    -fx-background-color: #e9ecef;
+}
+
+/* Table styles */
+.patient-table {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-margin: 20;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f1f3f5 transparent;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Action buttons in table */
+.action-button {
+    -fx-background-radius: 4;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.update-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+}
+
+.view-button {
+    -fx-background-color: #f1c40f;
+    -fx-text-fill: white;
+}
+
+/* Form styles */
+.form-container {
+    -fx-background-color: #f8f9fa;
+}
+
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 20;
+}
+
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.form-content {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-padding: 30;
+    -fx-spacing: 20;
+}
+
+.form-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+}
+
+.field-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-font-weight: bold;
+}
+
+.text-field, .date-picker, .combo-box {
+    -fx-pref-height: 40px;
+    -fx-background-color: white;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-padding: 5;
+}
+
+.text-field:focused, .date-picker:focused, .combo-box:focused {
+    -fx-border-color: #80bdff;
+    -fx-border-width: 2;
+}
+
+.date-picker > .text-field {
+    -fx-border-width: 0;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 5 10;
+}
+
+.button-container {
+    -fx-padding: 30 0 0 0;
+    -fx-spacing: 15;
+}
+
+.center-aligned-column .text {
+    -fx-alignment: CENTER;
+}
