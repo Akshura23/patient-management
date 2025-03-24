@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.patient.management.fx.controller.LoginFormController"
+            styleClass="login-root">
+    <stylesheets>
+        <URL value="@../styles/login.css"/>
+    </stylesheets>
+    <center>
+        <VBox alignment="CENTER" spacing="15" styleClass="login-container">
+            <Label text="Welcome Back" styleClass="login-title"/>
+            <GridPane hgap="10" vgap="10" styleClass="grid-pane">
+                <Label text="Username:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="usernameField" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Password:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <PasswordField fx:id="passwordField" promptText="Enter Password" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            </GridPane>
+            <Hyperlink fx:id="forgetPasswordLink" text="Forgot Password?" onAction="#handleForgetPasswordAction"/>
+            <Button text="Login" onAction="#handleLoginButtonAction" styleClass="login-button"/>
+        </VBox>
+    </center>
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+</BorderPane>

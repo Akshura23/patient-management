@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.patient.management.fx.controller.InitialUserRegistrationController"
+            styleClass="login-root">
+
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <stylesheets>
+                <URL value="@../styles/styles.css"/>
+            </stylesheets>
+
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Create Admin User" styleClass="title-label" minWidth="300"/>
+
+            <GridPane hgap="10" vgap="10" alignment="CENTER">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <Label text="First Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Last Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Birthday:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            </GridPane>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Create Admin" onAction="#handleCreateAdminAction" styleClass="primary-button"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,164 +1,210 @@
 package com.patient.management.fx.controller;
 
-import com.patient.management.entity.MedicalHistoryEntity;
 import com.patient.management.entity.PatientEntity;
 import com.patient.management.service.patient.PatientService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 @Component
-public class PatientManagementController {
-
-    @FXML
-    private TextField firstNameField;
-    @FXML
-    private TextField lastNameField;
-    @FXML
-    private TextField birthdayField;
-    @FXML
-    private TextField mobileNoField;
-    @FXML
-    private TextField emailField;
-    @FXML
-    private TextField addressField;
-    @FXML
-    private TextField genderField;
-    @FXML
-    private TextField emergencyContactNameField;
-    @FXML
-    private TextField emergencyContactPhoneField;
-    @FXML
-    private TextField insuranceInfoField;
+public class PatientManagementController extends BaseController {
 
     @FXML
     private TableView<PatientEntity> patientTable;
+    @FXML
+    private TableColumn<PatientEntity, String> uidColumn;
     @FXML
     private TableColumn<PatientEntity, String> firstNameColumn;
     @FXML
     private TableColumn<PatientEntity, String> lastNameColumn;
     @FXML
-    private TableColumn<PatientEntity, LocalDate> birthdayColumn;
+    private TableColumn<PatientEntity, String> birthdayColumn;
+    @FXML
+    private TableColumn<PatientEntity, Integer> ageColumn;
     @FXML
     private TableColumn<PatientEntity, String> mobileNoColumn;
     @FXML
     private TableColumn<PatientEntity, String> emailColumn;
     @FXML
-    private TableColumn<PatientEntity, String> addressColumn;
-    @FXML
     private TableColumn<PatientEntity, String> genderColumn;
     @FXML
-    private TableColumn<PatientEntity, String> emergencyContactNameColumn;
-    @FXML
-    private TableColumn<PatientEntity, String> emergencyContactPhoneColumn;
-    @FXML
-    private TableColumn<PatientEntity, String> insuranceInfoColumn;
+    private TableColumn<PatientEntity, Void> actionsColumn;
 
     private final PatientService patientService;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
-    public PatientManagementController(PatientService patientService) {
+    public PatientManagementController(ApplicationContext applicationContext, PatientService patientService) {
+        super(applicationContext);
         this.patientService = patientService;
     }
 
     @FXML
     public void initialize() {
+        setupTableColumns();
+        refreshTable();
+        setupColumnWidths();
+        maximizeWindow(patientTable);
+    }
+
+    private void setupColumnWidths() {
+        uidColumn.setVisible(false);
+        firstNameColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.12));
+        lastNameColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.12));
+        birthdayColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.12));
+        ageColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.08));
+        mobileNoColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.12));
+        emailColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.15));
+        genderColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.08));
+        actionsColumn.prefWidthProperty().bind(patientTable.widthProperty().multiply(0.21));
+    }
+
+    private void setupTableColumns() {
+        uidColumn.setCellValueFactory(new PropertyValueFactory<>("uid"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         birthdayColumn.setCellValueFactory(new PropertyValueFactory<>("birthday"));
         mobileNoColumn.setCellValueFactory(new PropertyValueFactory<>("mobileNo"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        emergencyContactNameColumn.setCellValueFactory(new PropertyValueFactory<>("emergencyContactName"));
-        emergencyContactPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("emergencyContactPhone"));
-        insuranceInfoColumn.setCellValueFactory(new PropertyValueFactory<>("insuranceInfo"));
-        patientTable.setItems(patientService.getAllPatients());
+
+        // Configure age column
+        ageColumn.setCellValueFactory(cellData -> {
+            String birthday = String.valueOf(cellData.getValue().getBirthday());
+            try {
+                LocalDate birthDate = LocalDate.parse(birthday, dateFormatter);
+                int age = Period.between(birthDate, LocalDate.now()).getYears();
+                return new javafx.beans.property.SimpleObjectProperty<>(age);
+            } catch (Exception e) {
+                return new javafx.beans.property.SimpleObjectProperty<>(0);
+            }
+        });
+
+        // Center align all columns
+        firstNameColumn.setStyle("-fx-alignment: CENTER;");
+        lastNameColumn.setStyle("-fx-alignment: CENTER;");
+        birthdayColumn.setStyle("-fx-alignment: CENTER;");
+        ageColumn.setStyle("-fx-alignment: CENTER;");
+        mobileNoColumn.setStyle("-fx-alignment: CENTER;");
+        emailColumn.setStyle("-fx-alignment: CENTER;");
+        genderColumn.setStyle("-fx-alignment: CENTER;");
+        actionsColumn.setStyle("-fx-alignment: CENTER;");
+
+        patientTable.setFixedCellSize(40);
+
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button updateBtn = new Button("Update");
+            private final Button deleteBtn = new Button("Delete");
+            private final Button viewBtn = new Button("View History");
+            private final HBox buttons = new HBox(5, updateBtn, deleteBtn, viewBtn);
+
+            {
+                buttons.setStyle("-fx-alignment: CENTER;");
+                updateBtn.getStyleClass().addAll("action-button", "update-button");
+                deleteBtn.getStyleClass().addAll("action-button", "delete-button");
+                viewBtn.getStyleClass().addAll("action-button", "view-button");
+
+                updateBtn.setOnAction(e -> {
+                    PatientEntity patient = getTableView().getItems().get(getIndex());
+                    handleUpdate(e, patient);
+                });
+
+                deleteBtn.setOnAction(e -> {
+                    PatientEntity patient = getTableView().getItems().get(getIndex());
+                    handleDelete(patient);
+                });
+
+                viewBtn.setOnAction(e -> {
+                    PatientEntity patient = getTableView().getItems().get(getIndex());
+                    handleViewMedicalHistory(e, patient);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : buttons);
+            }
+        });
     }
 
     @FXML
-    private void handleAddButtonAction() {
-        PatientEntity patient = new PatientEntity(
-                firstNameField.getText(),
-                lastNameField.getText(),
-                LocalDate.parse(birthdayField.getText()),
-                mobileNoField.getText(),
-                emailField.getText(),
-                addressField.getText(),
-                genderField.getText(),
-                emergencyContactNameField.getText(),
-                emergencyContactPhoneField.getText(),
-                insuranceInfoField.getText()
-        );
-        patientService.addPatient(patient);
-        patientTable.setItems(patientService.getAllPatients());
+    public void handleAddNewPatient(ActionEvent event) {
+        loadView("PatientCreationForm.fxml", ((Node) event.getSource()), null);
     }
 
-    @FXML
-    private void handleUpdateButtonAction() {
-        PatientEntity selectedPatient = patientTable.getSelectionModel().getSelectedItem();
-        if (selectedPatient != null) {
-            selectedPatient.setFirstName(firstNameField.getText());
-            selectedPatient.setLastName(lastNameField.getText());
-            selectedPatient.setBirthday(LocalDate.parse(birthdayField.getText()));
-            selectedPatient.setMobileNo(mobileNoField.getText());
-            selectedPatient.setEmail(emailField.getText());
-            selectedPatient.setAddress(addressField.getText());
-            selectedPatient.setGender(genderField.getText());
-            selectedPatient.setEmergencyContactName(emergencyContactNameField.getText());
-            selectedPatient.setEmergencyContactPhone(emergencyContactPhoneField.getText());
-            selectedPatient.setInsuranceInfo(insuranceInfoField.getText());
-            patientService.updatePatient(selectedPatient);
-            patientTable.refresh();
-        } else {
-            showAlert("Please select a patient to update.");
+    private void handleUpdate(ActionEvent event, PatientEntity patient) {
+        if (patient == null) {
+            showError("Selection Error", "Please select a patient to update.");
+            return;
+        }
+        PatientEntity existingPatient = patientService.getPatientById(patient.getUid());
+        loadView("PatientUpdateForm.fxml", ((Node) event.getSource()), existingPatient);
+    }
+
+    private void handleDelete(PatientEntity patient) {
+        if (patient == null) {
+            showError("Selection Error", "Please select a patient to delete.");
+            return;
+        }
+
+        if (showConfirmation("Delete Patient",
+                "Are you sure you want to delete patient: " +
+                        patient.getFirstName() + " " + patient.getLastName() + "?")) {
+            try {
+                patientService.deletePatient(patient);
+                refreshTable();
+            } catch (Exception e) {
+                showError("Delete Error", "Could not delete the patient: " + e.getMessage());
+            }
         }
     }
 
-    @FXML
-    private void handleDeleteButtonAction() {
-        PatientEntity selectedPatient = patientTable.getSelectionModel().getSelectedItem();
-        if (selectedPatient != null) {
-            patientService.deletePatient(selectedPatient);
-            patientTable.setItems(patientService.getAllPatients());
-        } else {
-            showAlert("Please select a patient to delete.");
+    private void handleViewMedicalHistory(ActionEvent event, PatientEntity patient) {
+        if (patient == null) {
+            showError("Selection Error", "Please select a patient to view medical history.");
+            return;
         }
-    }
-    @FXML
-    private void handleViewButtonAction() {
-        PatientEntity selectedPatient = patientTable.getSelectionModel().getSelectedItem();
-        if (selectedPatient != null) {
-            List<MedicalHistoryEntity> medicalHistories = selectedPatient.getMedicalHistories();
-            showMedicalHistories(medicalHistories);
-        } else {
-            showAlert("Please select a patient to view medical history.");
-        }
+        PatientEntity existingPatient = patientService.getPatientById(patient.getUid());
+        loadView("MedicalHistory.fxml", ((Node) event.getSource()), existingPatient);
     }
 
-    private void showMedicalHistories(List<MedicalHistoryEntity> medicalHistories) {
-        StringBuilder historyDetails = new StringBuilder();
-        for (MedicalHistoryEntity history : medicalHistories) {
-            historyDetails.append("Date: ").append(history.getDate()).append("\n")
-                    .append("Description: ").append(history.getDescription()).append("\n\n");
-        }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Medical History");
+    private boolean showConfirmation(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(historyDetails.toString());
-        alert.showAndWait();
+        alert.setContentText(message);
+
+        ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        return alert.showAndWait()
+                .filter(response -> response == buttonTypeYes)
+                .isPresent();
     }
 
-    private void showAlert(String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("No patient selected");
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+    private void refreshTable() {
+        patientTable.getItems().clear();
+        patientTable.getItems().addAll(patientService.getAllPatients());
+    }
+
+    @FXML
+    public void onPatientTableClicked() {
+        PatientEntity selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+        if (selectedPatient != null) {
+            // Handle row selection if needed
+        }
     }
 }

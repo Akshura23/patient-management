@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface PatientRepository extends JpaRepository<PatientEntity, Integer>, JpaSpecificationExecutor<PatientEntity> {
-
+    PatientEntity findByUid(Integer uid);
 }

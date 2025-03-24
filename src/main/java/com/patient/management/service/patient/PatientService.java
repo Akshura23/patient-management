@@ -11,4 +11,6 @@ public interface PatientService {
     void updatePatient(PatientEntity selectedPatient);
 
     void deletePatient(PatientEntity selectedPatient);
+
+    PatientEntity getPatientById(Integer uid);
 }

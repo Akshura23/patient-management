@@ -1,5 +1,6 @@
 package com.patient.management.entity;
 
+import com.patient.management.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,8 +29,9 @@ public class PatientEntity extends AuditableEntity {
     private String email;
     @Column(name = "address", nullable = false)
     private String address;
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
-    private String gender;
+    private Gender gender;
     @Column(name = "emergency_contact_name", nullable = false)
     private String emergencyContactName;
     @Column(name = "emergency_contact_phone", nullable = false)
@@ -40,7 +42,18 @@ public class PatientEntity extends AuditableEntity {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicalHistoryEntity> medicalHistories;
 
-    public PatientEntity(String firstName, String lastName, LocalDate birthday, String mobileNo, String email, String address, String gender, String emergencyContactName, String emergencyContactPhone, String insuranceInfo) {
+    public PatientEntity(String firstName, String lastName, LocalDate birthday, String mobileNo, String email,
+                         String address, Gender gender, String emergencyContactName, String emergencyContactPhone,
+                         String insuranceInfo) {
         this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.mobileNo = mobileNo;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+        this.emergencyContactName = emergencyContactName;
+        this.emergencyContactPhone = emergencyContactPhone;
+        this.insuranceInfo = insuranceInfo;
     }
 }
