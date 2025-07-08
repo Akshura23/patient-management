@@ -39,21 +39,7 @@ public class PatientEntity extends AuditableEntity {
     @Column(name = "insurance_info", nullable = false)
     private String insuranceInfo;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MedicalHistoryEntity> medicalHistories;
-
-    public PatientEntity(String firstName, String lastName, LocalDate birthday, String mobileNo, String email,
-                         String address, Gender gender, String emergencyContactName, String emergencyContactPhone,
-                         String insuranceInfo) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.mobileNo = mobileNo;
-        this.email = email;
-        this.address = address;
-        this.gender = gender;
-        this.emergencyContactName = emergencyContactName;
-        this.emergencyContactPhone = emergencyContactPhone;
-        this.insuranceInfo = insuranceInfo;
-    }
+    // TODO: Re-enable when medical history is properly configured
+    // @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private List<MedicalHistoryEntity> medicalHistories;
 }

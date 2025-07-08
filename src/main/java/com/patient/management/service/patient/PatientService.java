@@ -1,14 +1,15 @@
 package com.patient.management.service.patient;
 
 import com.patient.management.entity.PatientEntity;
-import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public interface PatientService {
-    ObservableList<PatientEntity> getAllPatients();
+    List<PatientEntity> getAllPatients();
 
-    void addPatient(PatientEntity patient);
+    PatientEntity addPatient(PatientEntity patient);
 
-    void updatePatient(PatientEntity selectedPatient);
+    PatientEntity updatePatient(PatientEntity selectedPatient);
 
     void deletePatient(PatientEntity selectedPatient);
 
