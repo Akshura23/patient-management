@@ -2,10 +2,10 @@ package com.patient.management.service.patient;
 
 import com.patient.management.entity.PatientEntity;
 import com.patient.management.repository.PatientRepository;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -18,18 +18,18 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public ObservableList<PatientEntity> getAllPatients() {
-        return FXCollections.observableArrayList(patientRepository.findAll());
+    public List<PatientEntity> getAllPatients() {
+        return patientRepository.findAll();
     }
 
     @Override
-    public void addPatient(PatientEntity patient) {
-        patientRepository.save(patient);
+    public PatientEntity addPatient(PatientEntity patient) {
+        return patientRepository.save(patient);
     }
 
     @Override
-    public void updatePatient(PatientEntity selectedPatient) {
-        patientRepository.save(selectedPatient);
+    public PatientEntity updatePatient(PatientEntity selectedPatient) {
+        return patientRepository.save(selectedPatient);
     }
 
     @Override
