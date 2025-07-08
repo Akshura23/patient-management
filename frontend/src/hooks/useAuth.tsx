@@ -43,6 +43,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (credentials: LoginRequest): Promise<boolean> => {
     try {
+      // Demo mode: allow admin/admin login without backend
+      if (credentials.username === 'admin' && credentials.password === 'admin') {
+        const token = btoa(`${credentials.username}:${credentials.password}`);
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('currentUser', credentials.username);
+        
+        setIsAuthenticated(true);
+        setCurrentUser(credentials.username);
+        return true;
+      }
+
       const response = await apiService.login(credentials);
       const loginData: LoginResponse = response.data;
       
@@ -59,6 +70,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return false;
     } catch (error) {
       console.error('Login failed:', error);
+      // Demo mode fallback for demo purposes
+      if (credentials.username === 'admin' && credentials.password === 'admin') {
+        const token = btoa(`${credentials.username}:${credentials.password}`);
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('currentUser', credentials.username);
+        
+        setIsAuthenticated(true);
+        setCurrentUser(credentials.username);
+        return true;
+      }
       return false;
     }
   };

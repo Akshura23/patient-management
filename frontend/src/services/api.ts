@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { Patient, LoginRequest, LoginResponse, CreateUserRequest, HealthResponse } from '../types';
+import { mockApiService } from './mockApi';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+const DEMO_MODE = process.env.REACT_APP_DEMO_MODE === 'true' || !process.env.REACT_APP_API_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -37,7 +39,7 @@ api.interceptors.response.use(
   }
 );
 
-export const apiService = {
+const realApiService = {
   // Health check
   health: (): Promise<AxiosResponse<HealthResponse>> => 
     api.get('/health'),
@@ -69,5 +71,8 @@ export const apiService = {
   deletePatient: (id: number): Promise<AxiosResponse<void>> => 
     api.delete(`/patients/${id}`),
 };
+
+// Export the appropriate service based on demo mode
+export const apiService = DEMO_MODE ? mockApiService : realApiService;
 
 export default apiService;
